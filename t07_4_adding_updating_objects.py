@@ -8,7 +8,7 @@ Base = declarative_base()
 Session = sessionmaker()
 
 # later, we create the engine
-engine = create_engine('sqlite:///:memory:', echo=True)
+engine = create_engine('sqlite:///:memory:', echo=False)
 
 # associate it with our custom Session class
 Session.configure(bind=engine)
