@@ -1,8 +1,8 @@
 from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy import Column, Integer, String, create_engine
 
-engine = create_engine('sqlite:///:memory:', echo=True)
 Base = declarative_base()
+engine = create_engine('sqlite:///:memory:', echo=True)
 
 class User(Base):
   __tablename__ = 'users'
@@ -17,10 +17,12 @@ class User(Base):
 
 print(repr(User.__table__)) 
 
-""" Expected result: 
+""" 
+    Expected result: 
     
     Table('users', MetaData(bind=None),
             Column('id', Integer(), table=<users>, primary_key=True, nullable=False),
             Column('name', String(), table=<users>),
             Column('fullname', String(), table=<users>),
-            Column('password', String(), table=<users>), schema=None) """
+            Column('password', String(), table=<users>), schema=None) 
+"""

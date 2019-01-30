@@ -2,8 +2,8 @@ from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy import Column, Integer, String,
 from sqlalchemy import 
 
-engine = create_engine('sqlite:///:memory:', echo=True)
 Base = declarative_base()
+engine = create_engine('sqlite:///:memory:', echo=True)
 
 class User(Base):
   __tablename__ = 'users'
@@ -19,6 +19,7 @@ class User(Base):
 print(Base.metadata.create_all(engine))            
 
 """ 
+    Expected result:
     SELECT CAST('test plain returns' AS VARCHAR(60)) AS anon_1
     ()
     SELECT CAST('test unicode returns' AS VARCHAR(60)) AS anon_1

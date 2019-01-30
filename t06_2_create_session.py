@@ -1,8 +1,19 @@
 from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy import Column, Integer, String, create_engine, Sequence
+from sqlalchemy.orm import sessionmaker
 
 Base = declarative_base()
+# configure Session class with desired options
+Session = sessionmaker()
+
+# later, we create the engine
 engine = create_engine('sqlite:///:memory:', echo=True)
+
+# associate it with our custom Session class
+Session.configure(bind=engine)
+
+# work with the session
+session = Session()
 
 #added with Sequence
 class User(Base):
@@ -16,14 +27,5 @@ class User(Base):
   def __repr__(self):
     return "<User(name='%s', fullname='%s', password='%s')>" % (self.name, self.fullname, self.password)
 
-ed_user = User(name='ed', fullname='Ed Jones', password='edspassword')
-print(ed_user.name)
-print(ed_user.password)
-print(str(ed_user.id))
-
-"""
-    Expected Result: 
-    ed
-    edspassword
-    None 
-"""
+# create the database 
+Base.metadata.create_all(engine)
