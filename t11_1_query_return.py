@@ -1,5 +1,5 @@
 from sqlalchemy.ext.declarative import declarative_base
-from sqlalchemy import Column, Integer, String, create_engine, Sequence, and_, or_, text, func
+from sqlalchemy import Column, Integer, String, create_engine, Sequence, and_, or_
 from sqlalchemy.orm import sessionmaker, aliased
 
 Base = declarative_base()
@@ -40,38 +40,20 @@ session.add_all([
 # write to database
 session.commit()
 
-# count number of rows of result set by .count()
-result_count = session.query(User).filter(User.name.like('%ed')).count()
-print(result_count)
+# using all() to return a list
+query = session.query(User).filter(User.name.like('%ed')).order_by(User.id)
+print(query.all())
 
 """ 
     Expected Result: 
-    2
+    [<User(name='ed', fullname='Ed Jones', password='f8s7ccs')>,
+    <User(name='fred', fullname='Fred Flinstone', password='blah')>]
 """ 
 
-# count number of rows of result set by func.count()
-result = session.query(func.count(User.name), User.name).group_by(User.name).all()
-print(result)
-
-""" 
-    Expected Result: 
-    [(1, u'ed'), (1, u'fred'), (1, u'mary'), (1, u'wendy')]
-""" 
-
-# to achieve simple SELECT count(*) FROM table
-result = session.query(func.count('*')).select_from(User).scalar()
-print(result)
+# using first() to get the first one as scalar  
+print(query.first())
 
 """ 
     Expected Result: 
-    4
-""" 
-
-# select_from() can be removed if we express the count in terms of the User primary key directly
-result = session.query(func.count(User.id)).scalar()
-print(result)
-
-""" 
-    Expected Result: 
-    4
+    <User(name='ed', fullname='Ed Jones', password='f8s7ccs')>
 """ 

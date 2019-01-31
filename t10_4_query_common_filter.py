@@ -43,8 +43,8 @@ session.commit()
 
 
 # query using filter() with AND using and_()
-for name, in session.query(User.name).filter(and_(User.name == 'ed', User.fullname == 'Ed Jones')): 
-    print(name)
+for instance in session.query(User.name, User.fullname).filter(and_(User.name == 'ed', User.fullname == 'Ed Jones')): 
+    print(instance.name)
 
 """ 
     Expected result:

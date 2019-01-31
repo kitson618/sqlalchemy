@@ -1,5 +1,5 @@
 from sqlalchemy.ext.declarative import declarative_base
-from sqlalchemy import Column, Integer, String, create_engine, Sequence, and_, or_, text, func
+from sqlalchemy import Column, Integer, String, create_engine, Sequence, and_, or_, text
 from sqlalchemy.orm import sessionmaker, aliased
 
 Base = declarative_base()
@@ -40,38 +40,33 @@ session.add_all([
 # write to database
 session.commit()
 
-# count number of rows of result set by .count()
-result_count = session.query(User).filter(User.name.like('%ed')).count()
-print(result_count)
+# using sql expression 1, from_statement(): Execute the given SELECT statement and return results.
+query = session.query(User).from_statement(text("SELECT * FROM users where name=:name")).params(name='ed').all()
+print(query)
 
 """ 
     Expected Result: 
-    2
+    [<User(name='ed', fullname='Ed Jones', password='edspassword')>]
 """ 
 
-# count number of rows of result set by func.count()
-result = session.query(func.count(User.name), User.name).group_by(User.name).all()
-print(result)
-
-""" 
-    Expected Result: 
-    [(1, u'ed'), (1, u'fred'), (1, u'mary'), (1, u'wendy')]
-""" 
-
-# to achieve simple SELECT count(*) FROM table
-result = session.query(func.count('*')).select_from(User).scalar()
-print(result)
+# using sql expression 2
+stmt = text("SELECT name, id, fullname, password FROM users where name=:name")
+stmt = stmt.columns(User.name, User.id, User.fullname, User.password)
+query = session.query(User).from_statement(stmt).params(name='ed').all()
+print(query)
 
 """ 
     Expected Result: 
-    4
+    [<User(name='ed', fullname='Ed Jones', password='edspassword')>]
 """ 
 
-# select_from() can be removed if we express the count in terms of the User primary key directly
-result = session.query(func.count(User.id)).scalar()
-print(result)
+# using sql expression 3
+stmt = text("SELECT name, id FROM users where name=:name")
+stmt = stmt.columns(User.name, User.id)
+query = session.query(User.id, User.name).from_statement(stmt).params(name='ed').all()
+print(query)
 
 """ 
     Expected Result: 
-    4
+    [(1, 'ed')]
 """ 
