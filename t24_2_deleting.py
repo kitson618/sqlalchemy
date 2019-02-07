@@ -1,7 +1,7 @@
 from sqlalchemy.ext.declarative import declarative_base
-from sqlalchemy import Column, Integer, String, create_engine, Sequence
-from sqlalchemy import ForeignKey
-from sqlalchemy.orm import sessionmaker, relationship, aliased
+from sqlalchemy import Column, Integer, String, create_engine, Sequence, ForeignKey
+from sqlalchemy.orm import sessionmaker, relationship, aliased, joinedload
+from sqlalchemy.sql import func, exists
 
 Base = declarative_base()
 
@@ -57,17 +57,24 @@ session.add_all([
 # write to database
 session.commit()
 
-stmt = session.query(Address).\
-        filter(Address.email_address != 'j25@yahoo.com').\
-        subquery()
-adalias = aliased(Address, stmt)
-for user, address in session.query(User, adalias).\
-    join(adalias, User.addresses):
-    print(user)
-    print(address)
+# delete the user 'jack'
+session.query(User).filter(User.name == 'jack').delete()
+
+# count the number of User record with name jack 
+jack_user = session.query(User).filter(User.name == 'jack').count()
+print(jack_user)
 
 """
-    Expected Result: 
-    <User(name='jack', fullname='Jack Bean', password='gjffdd')>
-    <Address(email_address='jack@google.com')>
+    Expected Result:
+    0
+""" 
+
+# count the number of Address record of jack 
+jack_email = session.query(Address).\
+    filter(Address.email_address.in_(['jack@google.com','j25@yahoo.com'])).count()
+print(jack_email)
+
 """
+    Expected Result:
+    2
+""" 

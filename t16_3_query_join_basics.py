@@ -1,7 +1,6 @@
 from sqlalchemy.ext.declarative import declarative_base
-from sqlalchemy import Column, Integer, String, create_engine, Sequence
-from sqlalchemy import ForeignKey
-from sqlalchemy.orm import sessionmaker, relationship, aliased
+from sqlalchemy import Column, Integer, String, create_engine, Sequence, ForeignKey
+from sqlalchemy.orm import sessionmaker, relationship
 
 Base = declarative_base()
 
@@ -57,17 +56,6 @@ session.add_all([
 # write to database
 session.commit()
 
-stmt = session.query(Address).\
-        filter(Address.email_address != 'j25@yahoo.com').\
-        subquery()
-adalias = aliased(Address, stmt)
-for user, address in session.query(User, adalias).\
-    join(adalias, User.addresses):
-    print(user)
-    print(address)
-
-"""
-    Expected Result: 
-    <User(name='jack', fullname='Jack Bean', password='gjffdd')>
-    <Address(email_address='jack@google.com')>
-"""
+# To control the first entity in the list of JOINs, use the Query.select_from() method
+query = session.query(User, Address).select_from(Address).join(User).all() 
+print(query)

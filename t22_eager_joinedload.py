@@ -1,7 +1,7 @@
 from sqlalchemy.ext.declarative import declarative_base
-from sqlalchemy import Column, Integer, String, create_engine, Sequence
-from sqlalchemy import ForeignKey
-from sqlalchemy.orm import sessionmaker, relationship, aliased
+from sqlalchemy import Column, Integer, String, create_engine, Sequence, ForeignKey
+from sqlalchemy.orm import sessionmaker, relationship, aliased, joinedload
+from sqlalchemy.sql import func, exists
 
 Base = declarative_base()
 
@@ -25,7 +25,7 @@ class User(Base):
     name = Column(String(50))
     fullname = Column(String(50))
     password = Column(String(12))
-    addresses = relationship("Address", back_populates='user') #bidirectional relationship
+    addresses = relationship("Address", back_populates='user') #bidirectional relationship    
 
     def __repr__(self):
         return "<User(name='%s', fullname='%s', password='%s')>" % (self.name, self.fullname, self.password)
@@ -57,17 +57,18 @@ session.add_all([
 # write to database
 session.commit()
 
-stmt = session.query(Address).\
-        filter(Address.email_address != 'j25@yahoo.com').\
-        subquery()
-adalias = aliased(Address, stmt)
-for user, address in session.query(User, adalias).\
-    join(adalias, User.addresses):
-    print(user)
-    print(address)
+jack = session.query(User).\
+        options(joinedload(User.addresses)).\
+        filter_by(name='jack').one()
 
+print(jack)
 """
-    Expected Result: 
+    Expected Result:
     <User(name='jack', fullname='Jack Bean', password='gjffdd')>
-    <Address(email_address='jack@google.com')>
+""" 
+
+print(jack.addresses)
 """
+    Expected Result:
+    [<Address(email_address='jack@google.com')>, <Address(email_address='j25@yahoo.com')>]
+""" 

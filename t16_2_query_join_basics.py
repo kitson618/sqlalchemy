@@ -1,7 +1,7 @@
 from sqlalchemy.ext.declarative import declarative_base
-from sqlalchemy import Column, Integer, String, create_engine, Sequence
-from sqlalchemy import ForeignKey
-from sqlalchemy.orm import sessionmaker, relationship, aliased
+from sqlalchemy import Column, Integer, String, create_engine, Sequence, ForeignKey
+from sqlalchemy import 
+from sqlalchemy.orm import sessionmaker, relationship
 
 Base = declarative_base()
 
@@ -57,17 +57,22 @@ session.add_all([
 # write to database
 session.commit()
 
-stmt = session.query(Address).\
-        filter(Address.email_address != 'j25@yahoo.com').\
-        subquery()
-adalias = aliased(Address, stmt)
-for user, address in session.query(User, adalias).\
-    join(adalias, User.addresses):
-    print(user)
-    print(address)
+# explicit condition
+result = session.query(User).join(Address, User.id==Address.user_id).all()    
+print(result)
 
-"""
-    Expected Result: 
-    <User(name='jack', fullname='Jack Bean', password='gjffdd')>
-    <Address(email_address='jack@google.com')>
-"""
+# specify relationship from left to right
+result = session.query(User).join(User.addresses).all()                
+print(result)
+
+# same, with explicit target
+result = session.query(User).join(Address, User.addresses).all()  
+print(result)
+
+# same, using a string
+result = session.query(User).join('addresses').all()                           
+print(result)
+
+# LEFT OUTER JOIN
+result = session.query(User).outerjoin(User.addresses).all() 
+print(result)
