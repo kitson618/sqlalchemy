@@ -27,10 +27,10 @@ class User(Base):
 # create the database 
 Base.metadata.create_all(engine)
 
-ed_user = User(name='ed', fullname='Ed Jones', password='edspassword')
-session.add(ed_user)
+# create a user object and add to database session
+# to be completed 
 
 # write changes to the database
-session.commit()
+# to be completed 
 
 

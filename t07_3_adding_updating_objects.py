@@ -34,15 +34,14 @@ Base.metadata.create_all(engine)
 ed_user = User(name='ed', fullname='Ed Jones', password='edspassword')
 session.add(ed_user)
 
-session.add_all([
-    User(name='wendy', fullname='Wendy Williams', password='foobar'),
-    User(name='mary', fullname='Mary Contrary', password='xxg527'),
-    User(name='fred', fullname='Fred Flinstone', password='blah')])
+# add the user object for wendy, mary, fred to the database session
+# to be completed
 
 # write changes to the database    
-session.commit()
+# to be completed
 
-ed_user.password = 'f8s7ccs'
+# update the password for ed_user to 'f8s7ccs'
+# to be completed
 
-our_user = session.query(User).filter_by(name='ed').first()
-print(our_user)
+# print out the first row of User Table with name 'ed'
+# to be completed

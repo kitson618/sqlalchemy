@@ -1,23 +1,22 @@
 from sqlalchemy.ext.declarative import declarative_base
-from sqlalchemy import Column, Integer, String, create_engine, Sequence
+from sqlalchemy import Column, Integer, String, create_engine # to be completed
 
 Base = declarative_base()
 engine = create_engine('sqlite:///:memory:', echo=True)
 
-#added with Sequence
+# to be completed, please add Sequence constraint 
 class User(Base):
   __tablename__ = 'users'
-  
-  id = Column(Integer, Sequence('user_id_seq'), primary_key=True)
-  name = Column(String(50))
-  fullname = Column(String(50))
-  password = Column(String(12))
+
+  id = Column(Integer, primary_key=True)
+  name = Column(String)
+  fullname = Column(String)
+  password = Column(String)
 
   def __repr__(self):
     return "<User(name='%s', fullname='%s', password='%s')>" % (self.name, self.fullname, self.password)
 
-Base.metadata.create_all(engine)
-print(repr(User.__table__)) 
+# to be completed   
 
 """ 
     Expected result: 

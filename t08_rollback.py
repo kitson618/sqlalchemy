@@ -36,28 +36,35 @@ session.add(ed_user)
 #1st commit
 session.commit()
 
-ed_user.name = 'Edwardo'
-fake_user = User(name='fakeuser', fullname='Invalid', password='12345')
-session.add(fake_user)
+# update the name of ed_user to 'Edwardo'
+# to be completed
 
-#before rollback
-updated_user = session.query(User).filter(User.name.in_(['Edwardo', 'fakeuser'])).all()
+# create a User instance 'fake_user' and add to Database session
+# to be completed
+
+# before rollback, get all the record with user name 'Edwardo', 'fakeuser'
+# to be completed
 print(updated_user)
 
-session.rollback()
+# session rollback function call
+# to be completed
 
-print("ed_user.name: " + ed_user.name)
+# print out the name for 'ed_user'
+# to be completed
+
 """ 
     Expected result:
     ed
 """
 
-print(fake_user in session)
+# print out the fake_user object from database session
+# to be completed
+
 """ 
     Expected result:
     False
 """
 
-#after rollback
-updated_user = session.query(User).filter(User.name.in_(['ed', 'fakeuser'])).all()
+# after rollback,get all the record with user name 'ed', 'fakeuser'
+# to be completed
 print(updated_user)

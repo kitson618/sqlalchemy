@@ -15,7 +15,7 @@ class User(Base):
   def __repr__(self):
     return "<User(name='%s', fullname='%s', password='%s')>" % (self.name, self.fullname, self.password)
 
-print(repr(User.__table__)) 
+# to be completed
 
 """ 
     Expected result: 

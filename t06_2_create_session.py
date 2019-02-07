@@ -1,19 +1,19 @@
 from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy import Column, Integer, String, create_engine, Sequence
-from sqlalchemy.orm import sessionmaker
+# to be completed 
 
 Base = declarative_base()
 # configure Session class with desired options
-Session = sessionmaker()
+# to be completed 
 
 # later, we create the engine
 engine = create_engine('sqlite:///:memory:', echo=False)
 
 # associate it with our custom Session class
-Session.configure(bind=engine)
+# to be completed 
 
-# work with the session
-session = Session()
+# create a Session instance
+# to be completed 
 
 #added with Sequence
 class User(Base):

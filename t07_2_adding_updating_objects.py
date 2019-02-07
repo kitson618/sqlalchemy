@@ -33,21 +33,23 @@ session.add(ed_user)
 # write changes to the database
 session.commit()
 
-our_user = session.query(User).filter_by(name='ed').first()
-print(our_user)
+# print out the first row of the User Table with name 'ed' 
+# to be completed 
 
 """ 
     Expected result:
     <User(name='ed', fullname='Ed Jones', password='edspassword')>
 """
 
-print(ed_user)
+# print out the User object 'ed_user' 
+# to be completed 
 """ 
     Expected result:
     <User(name='ed', fullname='Ed Jones', password='edspassword')>
 """
 
-print(ed_user is our_user)
+# print out the boolean result for ed_user and our_user (hint using 'is')
+# to be completed 
 """ 
     Expected result:
     True
