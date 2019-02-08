@@ -98,18 +98,6 @@ session.add_all([
 # write to database
 session.commit()
 
-
-
-
-
-
-
-
-
-
-
-
-
 # create the database 
 Base.metadata.create_all(engine)
 
