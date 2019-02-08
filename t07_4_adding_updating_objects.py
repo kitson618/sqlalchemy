@@ -44,13 +44,13 @@ session.add_all([
 
 ed_user.password = 'f8s7ccs'
 
-print("session.dirty result: " + session.dirty)
+print("session.dirty result: " + str(session.dirty))
 """ 
     Expected result: 
     IdentitySet([<User(name='ed', fullname='Ed Jones', password='f8s7ccs')>])
 """
 
-print("session.new result: " + session.new)
+print("session.new result: " + str(session.new))
 """ 
     Expected result: 
     IdentitySet([
