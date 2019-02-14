@@ -41,7 +41,8 @@ session.add_all([
 session.commit()
 
 # query the User name using filter() with equals, User.name=='ed' 
-# to be completed
+for name, in session.query(User.name).filter(User.name=='ed'): 
+    print(name)
     
 """ 
     Expected result:

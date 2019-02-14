@@ -41,7 +41,7 @@ session.add_all([
 session.commit()
 
 # using sql expression 1, from_statement(): Execute the given SELECT statement and return results.
-# to be completed
+query = session.query(User).from_statement(text("SELECT * FROM users where name=:name")).params(name='ed').all()
 print(query)
 
 """ 
@@ -58,11 +58,3 @@ print(query)
     [<User(name='ed', fullname='Ed Jones', password='edspassword')>]
 """ 
 
-# using sql expression 3
-# to be completed
-print(query)
-
-""" 
-    Expected Result: 
-    [(1, 'ed')]
-""" 

@@ -41,7 +41,8 @@ session.add_all([
 session.commit()
 
 # query using filter() with IN, User name in 'ed', 'wendy', 'jack'
-# to be completed
+for name, in session.query(User.name).filter(User.name.in_(['ed', 'wendy', 'jack'])):
+    print(name)
     
 """ 
     Expected result:

@@ -44,7 +44,8 @@ session.commit()
 query = session.query(User).filter(User.name.like('%ed')).order_by(User.id)
 
 # one() fully fetches all rows, if not exactly one and no row being found, will raise an error 
-# to be completed
+user = query.one()
+print(user)
 
 """ 
     Expected Result: 

@@ -40,9 +40,8 @@ session.add_all([
 # write to database
 session.commit()
 
-# write the query to get User name contains substring 'ed'
-# to be completed
 # using all() to return a list
+query = session.query(User).filter(User.name.like('%ed')).order_by(User.id)
 print(query.all())
 
 """ 

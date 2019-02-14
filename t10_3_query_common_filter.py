@@ -42,7 +42,8 @@ session.add_all([
 session.commit()
 
 # query using filter() with IS NULL - using equals for User name
-# to be completed
+for fullname, in session.query(User.fullname).filter(User.name == None): 
+    print(fullname)
 
 """ 
     Expected result:
@@ -52,7 +53,8 @@ session.commit()
 print('')
 
 # query using filter() with IS NULL - using is_ for User name
-# to be completed
+for fullname, in session.query(User.fullname).filter(User.name.is_(None)): 
+    print(fullname)
 
 """ 
     Expected result:
@@ -66,10 +68,10 @@ print('')
 
 """ 
     Expected result:
-    ed
-    wendy
-    mary
-    fred
+    Ed Jones
+    Wendy Williams
+    Mary Contrary
+    Fred Flinstone
 """
 
 print('')
@@ -79,8 +81,8 @@ print('')
 
 """ 
     Expected result:
-    ed
-    wendy
-    mary
-    fred
+    Ed Jones
+    Wendy Williams
+    Mary Contrary
+    Fred Flinstone
 """

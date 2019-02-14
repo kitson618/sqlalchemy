@@ -40,10 +40,8 @@ session.add_all([
 # write to database
 session.commit()
 
-# write the query to get User id, filter with User name 'ed', order by User id
-# to be completed
-
 # scalar() invokes the one() method, and upon success returns the first column of the row:
+query = session.query(User.id).filter(User.name == 'ed').order_by(User.id)
 print(query.scalar())
 
 """ 

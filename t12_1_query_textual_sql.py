@@ -41,7 +41,9 @@ session.add_all([
 session.commit()
 
 # write a for-loop to loop through the result for User id < 224, using filter() with the text() construct
-# to be completed
+for user in session.query(User).\
+    filter(text("id<224")).\
+    order_by(text("id")).all():
     print(user.name)
 
 """ 
