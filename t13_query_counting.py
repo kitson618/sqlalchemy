@@ -66,12 +66,3 @@ print(result)
     Expected Result: 
     4
 """ 
-
-# select_from() can be removed if we express the count in terms of the User primary key directly
-result = session.query(func.count(User.id)).scalar()
-print(result)
-
-""" 
-    Expected Result: 
-    4
-""" 
