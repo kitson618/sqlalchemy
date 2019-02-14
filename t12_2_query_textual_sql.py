@@ -59,14 +59,3 @@ print(query)
     Expected Result: 
     [<User(name='ed', fullname='Ed Jones', password='edspassword')>]
 """ 
-
-# using sql expression 3
-stmt = text("SELECT name, id FROM users where name=:name")
-stmt = stmt.columns(User.name, User.id)
-query = session.query(User.id, User.name).from_statement(stmt).params(name='ed').all()
-print(query)
-
-""" 
-    Expected Result: 
-    [(1, 'ed')]
-""" 
