@@ -1,6 +1,5 @@
 from sqlalchemy.ext.declarative import declarative_base
-from sqlalchemy import Column, Integer, String,
-from sqlalchemy import 
+from sqlalchemy import Column, Integer, String, create_engine
 
 Base = declarative_base()
 engine = create_engine('sqlite:///:memory:', echo=True)
